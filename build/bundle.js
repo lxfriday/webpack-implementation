@@ -81,40 +81,41 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/in.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/a.js":
-/*!******************!*\
-  !*** ./src/a.js ***!
-  \******************/
+/***/ "./src/hello.js":
+/*!**********************!*\
+  !*** ./src/hello.js ***!
+  \**********************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (function() {
-  console.log('default')
-});
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return hello; });
+function hello() {
+  console.log('minipack')
+}
 
 
 /***/ }),
 
-/***/ "./src/in.js":
-/*!*******************!*\
-  !*** ./src/in.js ***!
-  \*******************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./a */ "./src/a.js");
+/* harmony import */ var _hello__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hello */ "./src/hello.js");
 
 
-Object(_a__WEBPACK_IMPORTED_MODULE_0__["default"])()
+Object(_hello__WEBPACK_IMPORTED_MODULE_0__["default"])()
 
 
 /***/ })
