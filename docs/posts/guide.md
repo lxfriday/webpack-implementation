@@ -1,7 +1,7 @@
 # 总览
 
-- [webpack 解决的痛点](./webpack-fix-what.md)
-- webpack 配置项一览
+- [webpack 配置文件](./webpack-config-file)
+- [webpack 配置项一览](./webpack-all-configs)
 - 通过 npm scripts 启动 webpack
 - entry 输入项配置
 - output 输出项配置

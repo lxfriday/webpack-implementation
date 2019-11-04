@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "c": "webpack --mode=development --devtool=source-map"
+    "c": "webpack --mode=development --devtool=source-map --env.prod --env.name=lxfriday"
   },
   "keywords": [],
   "author": "",
