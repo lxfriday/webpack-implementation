@@ -10,7 +10,7 @@ module.exports = {
   },
   themeConfig: {
     // sidebar: [['/guide', '总览'], ['/webpack-fix-what', 'webpack 解决的痛点']],
-    sidebar: [['/posts/guide', '总览'], ['/posts/webpack-config-file', 'webpack 配置文件'], ['/posts/webpack-all-configs', 'webpack 配置项一览']],
+    sidebar: [['/posts/guide', '总览'], ['/posts/webpack-config-file', 'webpack 配置文件'], ['/posts/webpack-mode', 'webpack mode']],
     base: '/webpack-implementation/',
   },
 }

@@ -1,4 +1,8 @@
-# 总览
+---
+id: guide
+title: 总览
+sidebar_label: 总览
+---
 
 - [webpack 配置文件](./webpack-config-file)
 - [webpack mode](./webpack-mode)
