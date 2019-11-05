@@ -1,10 +1,6 @@
 {
   "docs": {
-    "Docusaurus": ["guide"],
-    "First Category": ["guide"],
-    "Second Category": ["guide"]
-  },
-  "docs-other": {
-    "First Category": ["guide", "guide"]
+    "总览": ["guide"],
+    "webpack 基本入门": ["webpack-config-file", "webpack-mode"]
   }
 }

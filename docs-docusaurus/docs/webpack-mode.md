@@ -1,4 +1,8 @@
-# webpack mode
+---
+id: webpack-mode
+title: mode
+sidebar_label: mode
+---
 
 ```js
 module.exports = (env, webpackcfg) => {

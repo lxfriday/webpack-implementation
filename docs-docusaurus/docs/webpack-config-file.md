@@ -1,4 +1,8 @@
-# webpack 配置文件
+---
+id: webpack-config-file
+title: 配置文件
+sidebar_label: 配置文件
+---
 
 webpack 配置文件可以导出一个对象、函数或者数组，比较常用的是导出一个对象或者函数。
 
