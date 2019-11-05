@@ -9,20 +9,20 @@
 // site configuration options.
 
 // List of projects/orgs using your project for the users page.
-const users = [
-  {
-    caption: 'User1',
-    // You will need to prepend the image path with your baseUrl
-    // if it is not '/', like: '/test-site/img/image.jpg'.
-    image: '/img/undraw_open_source.svg',
-    infoLink: 'https://www.facebook.com',
-    pinned: true,
-  },
-]
+// const users = [
+//   {
+//     caption: 'User1',
+//     // You will need to prepend the image path with your baseUrl
+//     // if it is not '/', like: '/test-site/img/image.jpg'.
+//     image: '/img/undraw_open_source.svg',
+//     infoLink: 'https://www.facebook.com',
+//     pinned: true,
+//   },
+// ]
 
 const siteConfig = {
   title: 'webpack 完全入门', // Title for your website.
-  tagline: 'A website for testing',
+  tagline: '全方位讲解 webpack',
   url: 'https://lxfriday.xyz/webpack-implementation/', // Your website URL
   baseUrl: '/webpack-implementation/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -41,17 +41,17 @@ const siteConfig = {
   // headerLinks: [{ doc: 'guide', label: 'Docs' }, { doc: 'doc4', label: 'API' }, { page: 'help', label: 'Help' }, { blog: true, label: 'Blog' }],
 
   // If you have users set above, you add it here:
-  users,
+  // users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/favicon.ico',
-  footerIcon: 'img/favicon.ico',
-  favicon: 'img/favicon.ico',
+  headerIcon: 'img/webpack.png',
+  footerIcon: 'img/webpack.png',
+  favicon: 'img/webpack.png',
 
   /* Colors for website */
   colors: {
-    primaryColor: '#150286',
-    secondaryColor: '#0e015d',
+    primaryColor: '#75afcc',
+    secondaryColor: '#75afcc',
   },
 
   /* Custom fonts for website */
@@ -100,7 +100,7 @@ const siteConfig = {
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: 'https://github.com/lxfriday/webpack-implementation',
 }
 
 module.exports = siteConfig
