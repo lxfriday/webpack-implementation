@@ -1,0 +1,18 @@
+{
+  "name": "npm-scripts-start-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "webpack --config=./webpack.config.js --mode=production --devtool=cheap-source-map",
+    "c1": "webpack --mode=production --progress  --profile --color",
+    "c2": "webpack --env.production --env.platform=web",
+    "c3": "webpack --mode=none"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

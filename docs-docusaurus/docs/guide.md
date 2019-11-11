@@ -7,6 +7,7 @@ sidebar_label: 总览
 1. [webpack 配置文件](webpack-config-file)
 1. [webpack mode](webpack-mode)
 1. [通过 npm scripts 启动 webpack](npm-scripts-start-webpack)
+1. [通过 npm scripts 传递配置项](pass-configs-via-npm-scripts)
 1. entry 输入项配置
 1. hash、chunkhash、contenthash 的区别
 1. output 输出项配置
