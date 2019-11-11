@@ -20,11 +20,13 @@
 //   },
 // ]
 
+const baseUrl = '/webpack-implementation/'
+
 const siteConfig = {
   title: 'webpack 完全入门', // Title for your website.
   tagline: '全方位讲解 webpack',
   url: 'https://lxfriday.xyz/webpack-implementation/', // Your website URL
-  baseUrl: '/webpack-implementation/', // Base URL for your project */
+  baseUrl, // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
@@ -77,7 +79,13 @@ const siteConfig = {
   },
 
   // Add custom scripts here that would be placed in <script> tags.
-  scripts: ['https://buttons.github.io/buttons.js'],
+
+  scripts: [
+    'https://buttons.github.io/buttons.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
+    `${baseUrl}js/code-block-buttons.js`,
+  ],
+  stylesheets: [`${baseUrl}css/code-block-buttons.css`],
 
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
@@ -90,7 +98,7 @@ const siteConfig = {
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.
-  docsSideNavCollapsible: true,
+  docsSideNavCollapsible: false,
 
   // Show documentation's last contributor's name.
   enableUpdateBy: true,
