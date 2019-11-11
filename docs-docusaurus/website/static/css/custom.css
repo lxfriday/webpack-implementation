@@ -14,3 +14,8 @@
 
 @media only screen and (min-width: 1500px) {
 }
+
+.navListItem.navListItemActive {
+  border-left: 5px solid #75afcc;
+  padding-left: 10px !important;
+}

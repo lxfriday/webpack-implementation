@@ -21,6 +21,7 @@
 // ]
 
 const baseUrl = '/webpack-implementation/'
+const primaryColor = '#75afcc'
 
 const siteConfig = {
   title: 'webpack 完全入门', // Title for your website.
@@ -52,8 +53,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: '#75afcc',
-    secondaryColor: '#75afcc',
+    primaryColor: primaryColor,
+    secondaryColor: primaryColor,
   },
 
   /* Custom fonts for website */
