@@ -24,9 +24,7 @@ class Footer extends React.Component {
   render() {
     return (
       <footer className="nav-footer" id="footer">
-        <section className="sitemap" />
         <section className="sitemap">
-          <div />
           <a href={this.props.config.baseUrl} className="nav-home">
             {this.props.config.footerIcon && (
               <img src={this.props.config.baseUrl + this.props.config.footerIcon} alt={this.props.config.title} width="66" height="58" />
@@ -48,7 +46,10 @@ class Footer extends React.Component {
               Star
             </a>
           </div>
-          <div />
+          <div>
+            <h5>微信公众号</h5>
+            <img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg" />
+          </div>
         </section>
         <a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" className="fbOpenSource" style={{ textAlign: 'center' }}>
           <img src={`${this.props.config.baseUrl}img/avatar.webp`} alt="lxfriday Source" width="60" height="60" style={{ borderRadius: 30 }} />
