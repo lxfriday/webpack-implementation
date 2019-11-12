@@ -67,6 +67,35 @@ webpack --mode=none
 webpack --mode=production --config=./webpack.config.js --json > stats.json
 ```
 
+## --watch
+
+`boolean`
+
+默认是 `false`，当为 `true` 时 webpack 会监听文件变更，并重新构建。在 `webpack-dev-server` `watch` 中是默认开启的。
+
+```js
+// webpack.config.js 用法
+module.exports = {
+  //...
+  watch: true,
+}
+```
+
+监听的配置项：
+
+```js
+module.exports = {
+  //...
+  watchOptions: {
+    // 合并变更触发构建，在 300 ms 内有其他变更的时候一起执行构建（防抖）
+    aggregateTimeout: 300,
+    poll: 1000, // 开启轮询单位是ms（false 表示不开启）
+    ignored: /node_modules/, // 忽略监听的目录
+    // ['files/**/*.js', 'node_modules'], // 忽略监听的目录
+  },
+}
+```
+
 ## --env
 
 当 webpack 配置文件导出一个函数的时候，可以传递 `--env` 给这个函数的第一个参数。

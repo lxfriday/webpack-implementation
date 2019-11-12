@@ -7,7 +7,7 @@
     "compile": "webpack --config=./webpack.config.js --mode=production --devtool=cheap-source-map",
     "c1": "webpack --mode=production --progress  --profile --color",
     "c2": "webpack --env.production --env.platform=web",
-    "c3": "webpack --mode=none"
+    "c3": "webpack --mode=none --watch"
   },
   "author": "",
   "license": "ISC",

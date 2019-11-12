@@ -13,5 +13,8 @@ module.exports = function(env, cfgs) {
       filename: 'bundle.js',
       path: getPath('build'),
     },
+    watchOptions: {
+      aggregateTimeout: 2000,
+    },
   }
 }
