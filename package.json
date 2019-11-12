@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL-v3",
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
