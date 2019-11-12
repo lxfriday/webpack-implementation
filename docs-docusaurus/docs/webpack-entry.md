@@ -42,7 +42,7 @@ output: {
 
 **字符串和数组打包的结果默认命名为 `main.js`，对象的打包命名是对象的 [key].js，文件内容和 key 对应**
 
-字符串入口
+### 字符串入口
 
 ```
 Asset      Size       Chunks         Chunk Names
@@ -51,7 +51,7 @@ Entrypoint main = main.js
 [0] ./index.js 21 bytes {0} [built]
 ```
 
-数组入口
+### 数组入口
 
 ```
 Asset      Size       Chunks        Chunk Names
@@ -63,7 +63,7 @@ Entrypoint main = main.js
 [3] ./name.js 0 bytes {0} [built]
 ```
 
-对象入口
+### 对象入口
 
 ```
 Asset      Size       Chunks         Chunk Names
@@ -76,4 +76,26 @@ Entrypoint name = name.js
 [0] ./index.js 21 bytes {0} [built]
 [1] ./app.js 0 bytes {1} [built]
 [2] ./name.js 0 bytes {2} [built]
+```
+
+## 动态入口（Dynamic entry）
+
+entry 也可以传递一个函数，在每次构建过程中，函数都会调用。
+
+每次 `func-entry.js` 文件更改之后，都会重新调用函数，打印 `compile`。
+
+```js
+entry: () => {
+  console.log('compile')
+  return './func-entry.js'
+},
+```
+
+函数返回的也可以是 `Promise`。
+
+```js
+entry: () => {
+  console.log('compile')
+  return new Promise(res => res(['./func-entry.js']))
+},
 ```
