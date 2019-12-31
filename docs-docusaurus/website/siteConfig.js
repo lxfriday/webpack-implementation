@@ -32,7 +32,7 @@ const siteConfig = {
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
-  editUrl: 'https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs',
+  editUrl: 'https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/',
 
   // Used for publishing and more
   projectName: '',
