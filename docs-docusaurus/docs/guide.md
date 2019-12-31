@@ -9,7 +9,7 @@ sidebar_label: 总览
 3. [通过 npm scripts 启动 webpack](npm-scripts-start-webpack)
 4. [通过 npm scripts 传递配置项](pass-configs-via-npm-scripts)
 5. [entry 输入项配置](webpack-entry)
-6. output 输出项配置
+6. [output 输出项配置](webpack-output)
 7. chunkhash、contenthash、hash 三者的区别和应用场景
 8. webpack-dev-server
 9. 实现增强版 react 热加载
