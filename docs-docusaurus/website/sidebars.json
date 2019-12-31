@@ -2,6 +2,6 @@
   "docs": {
     "总览": ["guide"],
     "webpack 基本入门": ["webpack-config-file", "webpack-mode", "npm-scripts-start-webpack", "pass-configs-via-npm-scripts"],
-    "深入细节": ["webpack-entry"]
+    "深入细节": ["webpack-entry", "webpack-output"]
   }
 }

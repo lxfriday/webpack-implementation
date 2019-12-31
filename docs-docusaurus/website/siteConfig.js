@@ -20,10 +20,11 @@
 //   },
 // ]
 
-const baseUrl = '/webpack-implementation/'
+const baseUrl = '/'
 const primaryColor = '#75afcc'
 
 const siteConfig = {
+  cname: 'webpack.lxfriday.xyz',
   title: 'webpack 完全入门', // Title for your website.
   tagline: '全方位讲解 webpack',
   url: 'https://lxfriday.xyz/webpack-implementation/', // Your website URL
@@ -31,16 +32,17 @@ const siteConfig = {
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
+  editUrl: 'https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs',
 
   // Used for publishing and more
-  projectName: 'webpack 完全入门',
+  projectName: '',
   organizationName: 'lxfriday',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
 
   // For no header links in the top nav bar -> headerLinks: [],
-  headerLinks: [{ doc: 'guide', label: '小书' }],
+  headerLinks: [{ doc: 'guide', label: '小书' }, { href: 'http://js-professional.lxfriday.xyz', label: 'JavaScript高级程序设计第四版' }],
   // headerLinks: [{ doc: 'guide', label: 'Docs' }, { doc: 'doc4', label: 'API' }, { page: 'help', label: 'Help' }, { blog: true, label: 'Blog' }],
 
   // If you have users set above, you add it here:
