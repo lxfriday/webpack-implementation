@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>entry 输入项配置 · webpack 完全入门</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="entry 表示 webpack 打包的入口文件，配置比较灵活，可以使用字符串、数组、对象。"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="entry 输入项配置 · webpack 完全入门"/><meta property="og:type" content="website"/><meta property="og:url" content="https://lxfriday.xyz/webpack-implementation//"/><meta property="og:description" content="entry 表示 webpack 打包的入口文件，配置比较灵活，可以使用字符串、数组、对象。"/><meta property="og:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/webpack.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="stylesheet" href="/css/code-block-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-block-buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/webpack.png" alt="webpack 完全入门"/><h2 class="headerTitleWithLogo">webpack 完全入门</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/guide" target="_self">小书</a></li><li class=""><a href="http://js-professional.lxfriday.xyz" target="_self">JavaScript高级程序设计第四版</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>深入细节</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">总览</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/guide">总览</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">webpack 基本入门</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-config-file">配置文件</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-mode">mode</a></li><li class="navListItem"><a class="navItem" href="/docs/npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">深入细节</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/webpack-entry">entry 输入项配置</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-output">output 输出项配置</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/webpack-entry.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">entry 输入项配置</h1></header><article><div><span><p>entry 表示 webpack 打包的入口文件，配置比较灵活，可以使用字符串、数组、对象。</p>
+<p>代码见 <a href="https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/webpack-entry">https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/webpack-entry</a></p>
+<p>建议配置 <code>context</code> 属性，它表示当前的上下文，使用相对路径时会有影响，如果都是使用绝对路径则可以忽略。</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-attr">context</span>: path.resolve(__dirname, <span class="hljs-string">'src'</span>),
+  <span class="hljs-attr">entry</span>: <span class="hljs-string">'./index.js'</span>,
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="用法"></a><a href="#用法" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>用法</h2>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// 字符串入口</span>
+<span class="hljs-attr">entry</span>: <span class="hljs-string">'./index.js'</span>
+
+<span class="hljs-comment">// 数组入口</span>
+<span class="hljs-attr">entry</span>: [<span class="hljs-string">'./index.js'</span>, <span class="hljs-string">'./name.js'</span>]
+
+<span class="hljs-comment">// 对象入口</span>
+<span class="hljs-attr">entry</span>: { <span class="hljs-attr">index</span>: <span class="hljs-string">'./index.js'</span>, <span class="hljs-attr">app</span>: <span class="hljs-string">'./app.js'</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'./name.js'</span> }
+
+<span class="hljs-comment">// 输出命名</span>
+<span class="hljs-attr">output</span>: {
+  <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+},
+</code></pre>
+<p>打包结果的命名：</p>
+<p><strong>字符串和数组打包的结果默认命名为 <code>main.js</code>，对象的打包命名是对象的 [key].js，文件内容和 key 对应</strong></p>
+<h3><a class="anchor" aria-hidden="true" id="字符串入口"></a><a href="#字符串入口" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>字符串入口</h3>
+<pre><code class="hljs">Asset      Size       Chunks         Chunk Names
+main.js  <span class="hljs-number">3.59</span> KiB       <span class="hljs-number">0</span>  [emitted]  main
+Entrypoint main = main.js
+[<span class="hljs-number">0</span>] ./index.js <span class="hljs-number">21</span> bytes {<span class="hljs-number">0</span>} [built]
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="数组入口"></a><a href="#数组入口" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>数组入口</h3>
+<pre><code class="hljs">Asset      Size       Chunks        Chunk Names
+main.js  <span class="hljs-number">3.87</span> KiB       <span class="hljs-number">0</span>  [emitted]  main
+Entrypoint main = main.js
+[<span class="hljs-number">0</span>] multi ./index.js ./app.js ./name.js <span class="hljs-number">52</span> bytes {<span class="hljs-number">0</span>} [built]
+[<span class="hljs-number">1</span>] ./index.js <span class="hljs-number">21</span> bytes {<span class="hljs-number">0</span>} [built]
+[<span class="hljs-number">2</span>] ./app.js <span class="hljs-number">0</span> bytes {<span class="hljs-number">0</span>} [built]
+[<span class="hljs-number">3</span>] ./name.js <span class="hljs-number">0</span> bytes {<span class="hljs-number">0</span>} [built]
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="对象入口"></a><a href="#对象入口" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>对象入口</h3>
+<pre><code class="hljs">Asset      Size       Chunks         Chunk Names
+  app.js  <span class="hljs-number">3.58</span> KiB       <span class="hljs-number">1</span>  [emitted]  app
+index.js  <span class="hljs-number">3.59</span> KiB       <span class="hljs-number">0</span>  [emitted]  index
+ name.js  <span class="hljs-number">3.58</span> KiB       <span class="hljs-number">2</span>  [emitted]  name
+Entrypoint index = index.js
+Entrypoint app = app.js
+Entrypoint name = name.js
+[<span class="hljs-number">0</span>] ./index.js <span class="hljs-number">21</span> bytes {<span class="hljs-number">0</span>} [built]
+[<span class="hljs-number">1</span>] ./app.js <span class="hljs-number">0</span> bytes {<span class="hljs-number">1</span>} [built]
+[<span class="hljs-number">2</span>] ./name.js <span class="hljs-number">0</span> bytes {<span class="hljs-number">2</span>} [built]
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="动态入口（dynamic-entry）"></a><a href="#动态入口（dynamic-entry）" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>动态入口（Dynamic entry）</h2>
+<p>entry 也可以传递一个函数，在每次构建过程中，函数都会调用。</p>
+<p>每次 <code>func-entry.js</code> 文件更改之后，都会重新调用函数，打印 <code>compile</code>。</p>
+<pre><code class="hljs css language-js">entry: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'compile'</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'./func-entry.js'</span>
+},
+</code></pre>
+<p>函数返回的也可以是 <code>Promise</code>。</p>
+<pre><code class="hljs css language-js">entry: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'compile'</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res([<span class="hljs-string">'./func-entry.js'</span>]))
+},
+</code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 11/12/2019 by lxfriday</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/pass-configs-via-npm-scripts"><span class="arrow-prev">← </span><span>通过 npm scripts 传递配置项</span></a><a class="docs-next button" href="/docs/webpack-output"><span>output 输出项配置</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#用法">用法</a><ul class="toc-headings"><li><a href="#字符串入口">字符串入口</a></li><li><a href="#数组入口">数组入口</a></li><li><a href="#对象入口">对象入口</a></li></ul></li><li><a href="#动态入口（dynamic-entry）">动态入口（Dynamic entry）</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/webpack.png" alt="webpack 完全入门" width="66" height="58"/></a><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/lxfriday">GitHub</a><a class="github-button" href="https://github.com/lxfriday/webpack-implementation" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><h5>微信公众号</h5><img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg"/></div></section><a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" class="fbOpenSource" style="text-align:center"><img src="/img/avatar.webp" alt="lxfriday Source" width="60" height="60" style="border-radius:30px"/></a><section class="copyright">Copyright © 2019 云影 sky</section></footer></div></body></html>

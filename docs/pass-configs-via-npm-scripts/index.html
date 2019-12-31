@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>通过 npm scripts 传递配置项 · webpack 完全入门</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="项目一般将 webpack 配置放到单独的文件中，以便进行比较复杂的定制。对于比较简单的配置，可以放到 npm scripts 中，也可以结合命令行和配置文件进行构建。"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="通过 npm scripts 传递配置项 · webpack 完全入门"/><meta property="og:type" content="website"/><meta property="og:url" content="https://lxfriday.xyz/webpack-implementation//"/><meta property="og:description" content="项目一般将 webpack 配置放到单独的文件中，以便进行比较复杂的定制。对于比较简单的配置，可以放到 npm scripts 中，也可以结合命令行和配置文件进行构建。"/><meta property="og:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/webpack.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="stylesheet" href="/css/code-block-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-block-buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/webpack.png" alt="webpack 完全入门"/><h2 class="headerTitleWithLogo">webpack 完全入门</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/guide" target="_self">小书</a></li><li class=""><a href="http://js-professional.lxfriday.xyz" target="_self">JavaScript高级程序设计第四版</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>webpack 基本入门</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">总览</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/guide">总览</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">webpack 基本入门</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-config-file">配置文件</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-mode">mode</a></li><li class="navListItem"><a class="navItem" href="/docs/npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">深入细节</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-entry">entry 输入项配置</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-output">output 输出项配置</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/pass-configs-via-npm-scripts.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">通过 npm scripts 传递配置项</h1></header><article><div><span><p>项目一般将 webpack 配置放到单独的文件中，以便进行比较复杂的定制。对于比较简单的配置，可以放到 npm scripts 中，也可以结合命令行和配置文件进行构建。</p>
+<p>代码见 <a href="https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/pass-configs-via-npm-scripts">https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/pass-configs-via-npm-scripts</a></p>
+<p>我们一般是这么用的。</p>
+<pre><code class="hljs css language-bash">webpack --config=./webpack.config.js
+webpack --config=./webpack.config.js --mode=production --devtool=cheap-source-map
+webpack --mode=production --color --profile
+webpack src/index.js -o dist/bundle.js
+</code></pre>
+<p><strong>注意</strong>：通过命令行传递的参数优先级比 <code>webpack.config.js</code> 配置文件的优先级高。</p>
+<h2><a class="anchor" aria-hidden="true" id="--mode"></a><a href="#--mode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--mode</h2>
+<p><code>string</code></p>
+<p>设定打包模式，具体不同的模式会走不同的内部优化方式，详见<a href="webpack-mode">webpack-mode</a>。</p>
+<pre><code class="hljs css language-bash">webpack --mode=production
+webpack --mode=development
+webpack --mode=none
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="--devtool"></a><a href="#--devtool" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--devtool</h2>
+<p><code>string</code></p>
+<p>指定 devtool，控制源映射文件的生成方式，常见的有 <code>eval</code>、<code>source-map</code>、<code>cheap-source-map</code>等。</p>
+<h2><a class="anchor" aria-hidden="true" id="--progress"></a><a href="#--progress" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--progress</h2>
+<p><code>boolean</code></p>
+<p>显示打包进度。</p>
+<h2><a class="anchor" aria-hidden="true" id="--hot"></a><a href="#--hot" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--hot</h2>
+<p><code>boolean</code></p>
+<p>开启 <a href="https://webpack.js.org/concepts/hot-module-replacement"><code>Hot Module Replacement</code></a>(HRM)。</p>
+<h2><a class="anchor" aria-hidden="true" id="--bail"></a><a href="#--bail" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--bail</h2>
+<p><code>boolean</code></p>
+<p>在第一个错误出现时抛出失败结果，而不是容忍它。默认情况下，当使用 HMR 时，webpack 会将在终端以及浏览器控制台中，以红色文字记录这些错误，但仍然继续进行打包。</p>
+<h2><a class="anchor" aria-hidden="true" id="--json"></a><a href="#--json" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--json</h2>
+<p>执行构建的时候在最后加上 <code>--json &gt; stats.json</code> ，会在构建完成之后将构建信息输出到 <code>stats.json</code>。这个文件可以提供给分析工具进行分析，常用的有如下几个：</p>
+<ul>
+<li><a href="https://github.com/webpack-contrib/webpack-bundle-analyzer">webpack-bundle-analyzer</a> 直接作为插件使用即可进行分析</li>
+<li><a href="https://chrisbateman.github.io/webpack-visualizer/">webpack-visualizer</a></li>
+<li><a href="https://webpack.github.io/analyse/">analyse tool</a></li>
+</ul>
+<pre><code class="hljs css language-bash">webpack --mode=production --config=./webpack.config.js --json &gt; stats.json
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="--watch"></a><a href="#--watch" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--watch</h2>
+<p><code>boolean</code></p>
+<p>默认是 <code>false</code>，当为 <code>true</code> 时 webpack 会监听文件变更，并重新构建。在 <code>webpack-dev-server</code> <code>watch</code> 中是默认开启的。</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// webpack.config.js 用法</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-comment">//...</span>
+  <span class="hljs-attr">watch</span>: <span class="hljs-literal">true</span>,
+}
+</code></pre>
+<p>监听的配置项：</p>
+<pre><code class="hljs css language-js"><span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-comment">//...</span>
+  <span class="hljs-attr">watchOptions</span>: {
+    <span class="hljs-comment">// 合并变更触发构建，在 300 ms 内有其他变更的时候一起执行构建（防抖）</span>
+    <span class="hljs-attr">aggregateTimeout</span>: <span class="hljs-number">300</span>,
+    <span class="hljs-attr">poll</span>: <span class="hljs-number">1000</span>, <span class="hljs-comment">// 开启轮询单位是ms（false 表示不开启）</span>
+    <span class="hljs-attr">ignored</span>: <span class="hljs-regexp">/node_modules/</span>, <span class="hljs-comment">// 忽略监听的目录</span>
+    <span class="hljs-comment">// ['files/**/*.js', 'node_modules'], // 忽略监听的目录</span>
+  },
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="--env"></a><a href="#--env" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>--env</h2>
+<p>当 webpack 配置文件导出一个函数的时候，可以传递 <code>--env</code> 给这个函数的第一个参数。</p>
+<pre><code class="hljs css language-bash">webpack --env.production --env.platform=web    <span class="hljs-comment"># sets env.production == true env.platform == "web"</span>
+</code></pre>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// webpack.config.js</span>
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">env, cfgs</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(env)
+  <span class="hljs-built_in">console</span>.log(cfgs)
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">mode</span>: <span class="hljs-string">'development'</span>,
+    <span class="hljs-attr">entry</span>: getPath(<span class="hljs-string">'index.js'</span>),
+    <span class="hljs-attr">output</span>: {
+      <span class="hljs-attr">filename</span>: <span class="hljs-string">'bundle.js'</span>,
+      <span class="hljs-attr">path</span>: getPath(<span class="hljs-string">'build'</span>),
+    },
+  }
+}
+</code></pre>
+<p>打印结果如下，函数的第二个参数就是通过命令行传递的配置，会覆盖配置文件中的对应配置项。</p>
+<pre><code class="hljs"><span class="hljs-string">{</span> <span class="hljs-attr">production:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">platform:</span> <span class="hljs-string">'web'</span> <span class="hljs-string">}</span>
+<span class="hljs-string">{</span> <span class="hljs-attr">_:</span> <span class="hljs-string">[],</span>
+  <span class="hljs-attr">cache:</span> <span class="hljs-literal">null</span><span class="hljs-string">,</span>
+  <span class="hljs-attr">bail:</span> <span class="hljs-literal">null</span><span class="hljs-string">,</span>
+  <span class="hljs-attr">profile:</span> <span class="hljs-literal">null</span><span class="hljs-string">,</span>
+  <span class="hljs-attr">color:</span> <span class="hljs-string">{</span> <span class="hljs-attr">level:</span> <span class="hljs-number">3</span><span class="hljs-string">,</span> <span class="hljs-attr">hasBasic:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">has256:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">has16m:</span> <span class="hljs-literal">true</span> <span class="hljs-string">},</span>
+  <span class="hljs-attr">colors:</span> <span class="hljs-string">{</span> <span class="hljs-attr">level:</span> <span class="hljs-number">3</span><span class="hljs-string">,</span> <span class="hljs-attr">hasBasic:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">has256:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">has16m:</span> <span class="hljs-literal">true</span> <span class="hljs-string">},</span>
+  <span class="hljs-attr">env:</span> <span class="hljs-string">{</span> <span class="hljs-attr">production:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span> <span class="hljs-attr">platform:</span> <span class="hljs-string">'web'</span> <span class="hljs-string">},</span>
+  <span class="hljs-attr">'info-verbosity':</span> <span class="hljs-string">'info'</span><span class="hljs-string">,</span>
+  <span class="hljs-attr">infoVerbosity:</span> <span class="hljs-string">'info'</span><span class="hljs-string">,</span>
+  <span class="hljs-string">'$0'</span><span class="hljs-string">:</span> <span class="hljs-string">'node_modules\\webpack\\bin\\webpack.js'</span> <span class="hljs-string">}</span>
+</code></pre>
+<p><code>--env</code> 支持的语法如下</p>
+<table>
+<thead>
+<tr><th style="text-align:left">使用方式</th><th style="text-align:left">产生的结果 env</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>webpack --env prod</code></td><td style="text-align:left"><code>&quot;prod&quot;</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod</code></td><td style="text-align:left"><code>{ prod: true }</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod=1</code></td><td style="text-align:left"><code>{ prod: 1 }</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod=foo</code></td><td style="text-align:left"><code>{ prod: &quot;foo&quot; }</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod --env.min</code></td><td style="text-align:left"><code>{ prod: true, min: true }</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod --env min</code></td><td style="text-align:left"><code>[{ prod: true }, &quot;min&quot;]</code></td></tr>
+<tr><td style="text-align:left"><code>webpack --env.prod=foo --env.prod=bar</code></td><td style="text-align:left"><code>{prod: [ &quot;foo&quot;, &quot;bar&quot; ]}</code></td></tr>
+</tbody>
+</table>
+<p>更多的命令行参数传递见 <a href="https://webpack.js.org/api/cli/">Command Line Interface</a>。</p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 11/12/2019 by lxfriday</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/npm-scripts-start-webpack"><span class="arrow-prev">← </span><span>通过 npm scripts 启动 webpack</span></a><a class="docs-next button" href="/docs/webpack-entry"><span>entry 输入项配置</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#--mode">--mode</a></li><li><a href="#--devtool">--devtool</a></li><li><a href="#--progress">--progress</a></li><li><a href="#--hot">--hot</a></li><li><a href="#--bail">--bail</a></li><li><a href="#--json">--json</a></li><li><a href="#--watch">--watch</a></li><li><a href="#--env">--env</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/webpack.png" alt="webpack 完全入门" width="66" height="58"/></a><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/lxfriday">GitHub</a><a class="github-button" href="https://github.com/lxfriday/webpack-implementation" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><h5>微信公众号</h5><img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg"/></div></section><a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" class="fbOpenSource" style="text-align:center"><img src="/img/avatar.webp" alt="lxfriday Source" width="60" height="60" style="border-radius:30px"/></a><section class="copyright">Copyright © 2019 云影 sky</section></footer></div></body></html>

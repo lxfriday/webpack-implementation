@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>mode · webpack 完全入门</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="```js"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="mode · webpack 完全入门"/><meta property="og:type" content="website"/><meta property="og:url" content="https://lxfriday.xyz/webpack-implementation//"/><meta property="og:description" content="```js"/><meta property="og:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/webpack.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="stylesheet" href="/css/code-block-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-block-buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/webpack.png" alt="webpack 完全入门"/><h2 class="headerTitleWithLogo">webpack 完全入门</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/guide" target="_self">小书</a></li><li class=""><a href="http://js-professional.lxfriday.xyz" target="_self">JavaScript高级程序设计第四版</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>webpack 基本入门</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">总览</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/guide">总览</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">webpack 基本入门</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-config-file">配置文件</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/webpack-mode">mode</a></li><li class="navListItem"><a class="navItem" href="/docs/npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">深入细节</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-entry">entry 输入项配置</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-output">output 输出项配置</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/webpack-mode.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">mode</h1></header><article><div><span><pre><code class="hljs css language-js"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function">(<span class="hljs-params">env, webpackcfg</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">mode</span>: string,
+  }
+}
+</code></pre>
+<p><code>production</code> | <code>development</code> | <code>none</code></p>
+<p>指定 mode 可以让 webpack 使用内置的优化方法，这相当于开箱即用。</p>
+<p><code>production</code> 的目标是打包出可以发布的代码，会对 js 代码进行压缩。</p>
+<p><code>development</code> 默认不会对代码进行压缩，只会将代码打包出来。</p>
+<p><code>none</code> 不会添加内置的优化选项。</p>
+<p>三者的比较如下。</p>
+<table>
+<thead>
+<tr><th style="text-align:left">选项</th><th style="text-align:left">描述</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left"><code>development</code></td><td style="text-align:left">会将 <code>DefinePlugin</code> 中 <code>process.env.NODE_ENV</code> 的值设置为 <code>development</code>。启用 <code>NamedChunksPlugin</code> 和 <code>NamedModulesPlugin</code>。</td></tr>
+<tr><td style="text-align:left"><code>production</code></td><td style="text-align:left">会将 <code>DefinePlugin</code> 中 <code>process.env.NODE_ENV</code> 的值设置为 <code>production</code>。启用 <code>FlagDependencyUsagePlugin</code>, <code>FlagIncludedChunksPlugin</code>, <code>ModuleConcatenationPlugin</code>, <code>NoEmitOnErrorsPlugin</code>, <code>OccurrenceOrderPlugin</code>, <code>SideEffectsFlagPlugin</code> 和 <code>TerserPlugin</code>。</td></tr>
+<tr><td style="text-align:left"><code>none</code></td><td style="text-align:left">退出任何默认优化选项</td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="development"></a><a href="#development" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>development</h2>
+<pre><code class="hljs css language-diff">// webpack.development.config.js
+module.exports = {
+<span class="hljs-addition">+ mode: 'development'</span>
+<span class="hljs-deletion">- devtool: 'eval',</span>
+<span class="hljs-deletion">- cache: true,</span>
+<span class="hljs-deletion">- performance: {</span>
+<span class="hljs-deletion">-   hints: false</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- output: {</span>
+<span class="hljs-deletion">-   pathinfo: true</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- optimization: {</span>
+<span class="hljs-deletion">-   namedModules: true,</span>
+<span class="hljs-deletion">-   namedChunks: true,</span>
+<span class="hljs-deletion">-   nodeEnv: 'development',</span>
+<span class="hljs-deletion">-   flagIncludedChunks: false,</span>
+<span class="hljs-deletion">-   occurrenceOrder: false,</span>
+<span class="hljs-deletion">-   sideEffects: false,</span>
+<span class="hljs-deletion">-   usedExports: false,</span>
+<span class="hljs-deletion">-   concatenateModules: false,</span>
+<span class="hljs-deletion">-   splitChunks: {</span>
+<span class="hljs-deletion">-     hidePathInfo: false,</span>
+<span class="hljs-deletion">-     minSize: 10000,</span>
+<span class="hljs-deletion">-     maxAsyncRequests: Infinity,</span>
+<span class="hljs-deletion">-     maxInitialRequests: Infinity,</span>
+<span class="hljs-deletion">-   },</span>
+<span class="hljs-deletion">-   noEmitOnErrors: false,</span>
+<span class="hljs-deletion">-   checkWasmTypes: false,</span>
+<span class="hljs-deletion">-   minimize: false,</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- plugins: [</span>
+<span class="hljs-deletion">-   new webpack.NamedModulesPlugin(),</span>
+<span class="hljs-deletion">-   new webpack.NamedChunksPlugin(),</span>
+<span class="hljs-deletion">-   new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),</span>
+<span class="hljs-deletion">- ]</span>
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="production"></a><a href="#production" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>production</h2>
+<pre><code class="hljs css language-diff">// webpack.production.config.js
+module.exports = {
+<span class="hljs-addition">+ mode: 'production',</span>
+<span class="hljs-deletion">- performance: {</span>
+<span class="hljs-deletion">-   hints: 'warning'</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- output: {</span>
+<span class="hljs-deletion">-   pathinfo: false</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- optimization: {</span>
+<span class="hljs-deletion">-   namedModules: false,</span>
+<span class="hljs-deletion">-   namedChunks: false,</span>
+<span class="hljs-deletion">-   nodeEnv: 'production',</span>
+<span class="hljs-deletion">-   flagIncludedChunks: true,</span>
+<span class="hljs-deletion">-   occurrenceOrder: true,</span>
+<span class="hljs-deletion">-   sideEffects: true,</span>
+<span class="hljs-deletion">-   usedExports: true,</span>
+<span class="hljs-deletion">-   concatenateModules: true,</span>
+<span class="hljs-deletion">-   splitChunks: {</span>
+<span class="hljs-deletion">-     hidePathInfo: true,</span>
+<span class="hljs-deletion">-     minSize: 30000,</span>
+<span class="hljs-deletion">-     maxAsyncRequests: 5,</span>
+<span class="hljs-deletion">-     maxInitialRequests: 3,</span>
+<span class="hljs-deletion">-   },</span>
+<span class="hljs-deletion">-   noEmitOnErrors: true,</span>
+<span class="hljs-deletion">-   checkWasmTypes: true,</span>
+<span class="hljs-deletion">-   minimize: true,</span>
+<span class="hljs-deletion">- },</span>
+<span class="hljs-deletion">- plugins: [</span>
+<span class="hljs-deletion">-   new TerserPlugin(/* ... */), // minify js</span>
+<span class="hljs-deletion">-   new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),</span>
+<span class="hljs-deletion">-   new webpack.optimize.ModuleConcatenationPlugin(), // tree shaking</span>
+<span class="hljs-deletion">-   new webpack.NoEmitOnErrorsPlugin()</span>
+<span class="hljs-deletion">- ]</span>
+}
+</code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 11/5/2019 by lxfriday</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/webpack-config-file"><span class="arrow-prev">← </span><span>配置文件</span></a><a class="docs-next button" href="/docs/npm-scripts-start-webpack"><span>通过 npm scripts 启动 webpack</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#development">development</a></li><li><a href="#production">production</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/webpack.png" alt="webpack 完全入门" width="66" height="58"/></a><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/lxfriday">GitHub</a><a class="github-button" href="https://github.com/lxfriday/webpack-implementation" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><h5>微信公众号</h5><img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg"/></div></section><a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" class="fbOpenSource" style="text-align:center"><img src="/img/avatar.webp" alt="lxfriday Source" width="60" height="60" style="border-radius:30px"/></a><section class="copyright">Copyright © 2019 云影 sky</section></footer></div></body></html>

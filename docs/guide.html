@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>总览 · webpack 完全入门</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="1. [webpack 配置文件](webpack-config-file)"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="总览 · webpack 完全入门"/><meta property="og:type" content="website"/><meta property="og:url" content="https://lxfriday.xyz/webpack-implementation//"/><meta property="og:description" content="1. [webpack 配置文件](webpack-config-file)"/><meta property="og:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/webpack.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="stylesheet" href="/css/code-block-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-block-buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/webpack.png" alt="webpack 完全入门"/><h2 class="headerTitleWithLogo">webpack 完全入门</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive siteNavItemActive"><a href="/docs/guide" target="_self">小书</a></li><li class=""><a href="http://js-professional.lxfriday.xyz" target="_self">JavaScript高级程序设计第四版</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>总览</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">总览</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/guide">总览</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">webpack 基本入门</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-config-file">配置文件</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-mode">mode</a></li><li class="navListItem"><a class="navItem" href="/docs/npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">深入细节</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-entry">entry 输入项配置</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-output">output 输出项配置</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/guide.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">总览</h1></header><article><div><span><ol>
+<li><a href="webpack-config-file">webpack 配置文件</a></li>
+<li><a href="webpack-mode">webpack mode</a></li>
+<li><a href="npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li>
+<li><a href="pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li>
+<li><a href="webpack-entry">entry 输入项配置</a></li>
+<li><a href="webpack-output">output 输出项配置</a></li>
+<li>chunkhash、contenthash、hash 三者的区别和应用场景</li>
+<li>webpack-dev-server</li>
+<li>实现增强版 react 热加载</li>
+<li>loader 文件加载配置</li>
+<li>配置 loader 处理 ts</li>
+<li>有哪些好用的 loader</li>
+<li>写 loader 是不是很难</li>
+<li>使用缓存和多线程技术加速 webpack 构建</li>
+<li>添加 CSS 预处理和后处理(less、sass、postcss)</li>
+<li>plugin 常用插件配置</li>
+<li>好用的 plugin 收集</li>
+<li>mode 开发模式</li>
+<li>devtool 开发工具</li>
+<li>resolve 处理文件解析</li>
+<li>optimization 构建优化</li>
+<li>stats 构建过程的打印信息</li>
+<li>node 模拟 nodejs api</li>
+<li>webpack 构建流程</li>
+<li>专题 1：提升构建速度 n 把利剑</li>
+<li>专题 2：压缩所有资源的配置方法(html、css、js)</li>
+<li>动手 1：编写一个 loader</li>
+<li>动手 2：编写一个 plugin</li>
+<li>动手 3：模拟实现简易 webpack</li>
+<li>动手实现一个企业级脚手架</li>
+</ol>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 12/31/2019 by lxfriday</em></div><div class="docs-prevnext"><a class="docs-next button" href="/docs/webpack-config-file"><span>配置文件</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/webpack.png" alt="webpack 完全入门" width="66" height="58"/></a><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/lxfriday">GitHub</a><a class="github-button" href="https://github.com/lxfriday/webpack-implementation" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><h5>微信公众号</h5><img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg"/></div></section><a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" class="fbOpenSource" style="text-align:center"><img src="/img/avatar.webp" alt="lxfriday Source" width="60" height="60" style="border-radius:30px"/></a><section class="copyright">Copyright © 2019 云影 sky</section></footer></div></body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>通过 npm scripts 启动 webpack · webpack 完全入门</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="这篇介绍怎么通过 npm scripts 启动 webpack 进行构建。"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="通过 npm scripts 启动 webpack · webpack 完全入门"/><meta property="og:type" content="website"/><meta property="og:url" content="https://lxfriday.xyz/webpack-implementation//"/><meta property="og:description" content="这篇介绍怎么通过 npm scripts 启动 webpack 进行构建。"/><meta property="og:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://lxfriday.xyz/webpack-implementation/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/webpack.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><link rel="stylesheet" href="/css/code-block-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-block-buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/webpack.png" alt="webpack 完全入门"/><h2 class="headerTitleWithLogo">webpack 完全入门</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/guide" target="_self">小书</a></li><li class=""><a href="http://js-professional.lxfriday.xyz" target="_self">JavaScript高级程序设计第四版</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>webpack 基本入门</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">总览</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/guide">总览</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">webpack 基本入门</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-config-file">配置文件</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-mode">mode</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/npm-scripts-start-webpack">通过 npm scripts 启动 webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/pass-configs-via-npm-scripts">通过 npm scripts 传递配置项</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">深入细节</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/webpack-entry">entry 输入项配置</a></li><li class="navListItem"><a class="navItem" href="/docs/webpack-output">output 输出项配置</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/lxfriday/webpack-implementation/tree/master/docs-docusaurus/docs/npm-scripts-start-webpack.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">通过 npm scripts 启动 webpack</h1></header><article><div><span><p>这篇介绍怎么通过 npm scripts 启动 webpack 进行构建。</p>
+<p>代码见 <a href="https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/npm-scripts-start-webpack">https://github.com/lxfriday/webpack-implementation/tree/master/demo-code/npm-scripts-start-webpack</a></p>
+<p>首先在项目中安装 <code>webpack</code> <code>webpack-cli</code>，这两者缺一不可。</p>
+<pre><code class="hljs css language-bash">yarn add webpack webpack-cli -D
+</code></pre>
+<p>or</p>
+<pre><code class="hljs css language-bash">npm i webpack webpack-cli -D
+</code></pre>
+<p>然后编写一个入口文件。</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// index.js</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hello world'</span>)
+</code></pre>
+<p>建立一个文件夹 <code>build</code>，作为构建产物的存放文件夹，再创建一个 html 文件来加载生成的 js 文件。</p>
+<pre><code class="hljs css language-html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"X-UA-Compatible"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"ie=edge"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HELLO<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    npm-scripts-start-webpack
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"bundle.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>下面开始编写 webpack 配置文件， 在项目目录下创建 <code>webpack.config.js</code>，webpack 默认会加载 <code>package.json</code> 同级目录下的这个文件。</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// webpack.config.js</span>
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+
+<span class="hljs-comment">// 方便获取项目目录下的文件夹和文件</span>
+<span class="hljs-keyword">const</span> getPath = <span class="hljs-function"><span class="hljs-params">p</span> =&gt;</span> path.resolve(__dirname, p)
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">mode</span>: <span class="hljs-string">'development'</span>, <span class="hljs-comment">// mode 为 development 可以查看打包出来的代码, production 打包出来的代码经过压缩优化</span>
+    <span class="hljs-attr">entry</span>: getPath(<span class="hljs-string">'index.js'</span>), <span class="hljs-comment">// 入口文件</span>
+    <span class="hljs-attr">output</span>: {
+      <span class="hljs-attr">filename</span>: <span class="hljs-string">'bundle.js'</span>, <span class="hljs-comment">// 打包出来的文件</span>
+      <span class="hljs-attr">path</span>: getPath(<span class="hljs-string">'build'</span>), <span class="hljs-comment">// 打包的代码存放的目录</span>
+    },
+  }
+}
+</code></pre>
+<p>然后修改 <code>package.json</code>，在 scripts 下新增 <code>&quot;compile&quot;: &quot;webpack&quot;</code>。</p>
+<pre><code class="hljs css language-diff">{
+  "scripts": {
+<span class="hljs-addition">+    "compile": "webpack"</span>
+  }
+}
+</code></pre>
+<p>最后执行 <code>yarn compile</code>，打包结果如下。</p>
+<pre><code class="hljs"><span class="hljs-attr">Hash:</span> <span class="hljs-string">af012f9402c6b3156cee</span>
+<span class="hljs-attr">Version:</span> <span class="hljs-string">webpack</span> <span class="hljs-number">4.41</span><span class="hljs-number">.2</span>
+<span class="hljs-attr">Time:</span> <span class="hljs-string">111ms</span>
+<span class="hljs-attr">Built at:</span> <span class="hljs-number">2019</span><span class="hljs-number">-11</span><span class="hljs-number">-11</span> <span class="hljs-number">1</span><span class="hljs-string">:16:09</span> <span class="hljs-string">PM</span>
+    <span class="hljs-string">Asset</span>      <span class="hljs-string">Size</span>  <span class="hljs-string">Chunks</span>             <span class="hljs-string">Chunk</span> <span class="hljs-string">Names</span>
+<span class="hljs-string">bundle.js</span>  <span class="hljs-number">3.79</span> <span class="hljs-string">KiB</span>    <span class="hljs-string">main</span>  <span class="hljs-string">[emitted]</span>  <span class="hljs-string">main</span>
+<span class="hljs-string">Entrypoint</span> <span class="hljs-string">main</span> <span class="hljs-string">=</span> <span class="hljs-string">bundle.js</span>
+<span class="hljs-string">[./index.js]</span> <span class="hljs-number">39</span> <span class="hljs-string">bytes</span> <span class="hljs-string">{main}</span> <span class="hljs-string">[built]</span>
+<span class="hljs-string">Done</span> <span class="hljs-string">in</span> <span class="hljs-number">1.</span><span class="hljs-string">44s.</span>
+</code></pre>
+<p>这时候，打开 <code>build/bundle.js</code> 即可查看打包出来的代码。在浏览器中打开 <code>index.html</code> 在控制台中看到打印出来的 <code>hello world</code> 时表示构建成功了。</p>
+<p>构建出来的代码（部分）</p>
+<pre><code class="hljs css language-js"><span class="hljs-comment">// 最后面</span>
+
+  <span class="hljs-comment">/******/</span> {
+    <span class="hljs-comment">/***/</span> <span class="hljs-string">'./index.js'</span>:
+      <span class="hljs-comment">/*!******************!*\
+  !*** ./index.js ***!
+  \******************/</span>
+      <span class="hljs-comment">/*! no static exports found */</span>
+      <span class="hljs-comment">/***/</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, exports</span>) </span>{
+        <span class="hljs-built_in">eval</span>(<span class="hljs-string">"// index.js\nconsole.log('hello world')\n\n\n//# sourceURL=webpack:///./index.js?"</span>)
+
+        <span class="hljs-comment">/***/</span>
+      },
+
+    <span class="hljs-comment">/******/</span>
+  }
+</code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 11/11/2019 by lxfriday</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/webpack-mode"><span class="arrow-prev">← </span><span>mode</span></a><a class="docs-next button" href="/docs/pass-configs-via-npm-scripts"><span>通过 npm scripts 传递配置项</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/webpack.png" alt="webpack 完全入门" width="66" height="58"/></a><div><h5>More</h5><a href="/blog">Blog</a><a href="https://github.com/lxfriday">GitHub</a><a class="github-button" href="https://github.com/lxfriday/webpack-implementation" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><h5>微信公众号</h5><img alt="公众号" src="https://qiniu1.lxfriday.xyz/blog/lxfriday_20191111133801.jpg"/></div></section><a href="https://lxfriday.xyz" target="_blank" rel="noreferrer noopener" class="fbOpenSource" style="text-align:center"><img src="/img/avatar.webp" alt="lxfriday Source" width="60" height="60" style="border-radius:30px"/></a><section class="copyright">Copyright © 2019 云影 sky</section></footer></div></body></html>
